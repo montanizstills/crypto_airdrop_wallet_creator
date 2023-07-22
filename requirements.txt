@@ -1,0 +1,5 @@
+pytest
+web3
+# pip install git+https://github.com/zksync-sdk/zksync-python.git
+hdwallet
+requests
