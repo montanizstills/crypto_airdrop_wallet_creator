@@ -4,7 +4,6 @@ import time
 
 import hdwallet.hdwallet
 import requests
-from eth_account import Account
 from hdwallet.utils import generate_entropy
 from web3 import Web3, HTTPProvider
 from web3.main import BaseWeb3
@@ -27,8 +26,10 @@ def get_wallet(private_key: str):
 
 
 def get_gas():
+    # if tx:
+    #     transaction_fee = protocol.eth.generate_gas_price(tx)
     response = requests.get(
-        f'https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey={os.environ.get("etherscan_api_key")}')
+        f'https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=<etherscan-api-key>')
     print_and_log(logging.DEBUG, response.text)
     fast = response.json()['fastgasprice']  # json.loads
     suggested = response.json()['proposegasprice']  # json.loads
@@ -47,28 +48,33 @@ def send_transaction(
 
     # try-catch account creation && address validation
     account = protocol.eth.account.from_key(source_pk)  # can use wallet.someMethod()?
-    address_in_bytes = protocol.to_checksum_address(dest_address)
+    dest_address_in_bytes = protocol.to_checksum_address(dest_address)
     # from ens.auto import ns, address = ns.address('alice.eth'), https://docs.ens.domains/dapp-developer-guide/working-with-ens
+
     print_and_log(logging.INFO,
-                  f"{account.address} has a balance of {protocol.eth.contract(protocol.to_checksum_address('0x2170ed0880ac9a755fd29b2688956bd959f933f8')).}")
+                  f"Wallet: '{account.address}', has a balance of {protocol.eth.get_balance(dest_address_in_bytes)}")
     print_and_log(logging.INFO, f"Attempting to sending {amount} {coin} to {dest_address}.")
 
-    protocol.eth.default_account = account.address
-    protocol.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
 
-    nonce = time.time_ns() + 1  # 0xabc123
     tx = {
-        'nonce': nonce,
-        'to': address_in_bytes,
-        'value': Web3.to_wei(0.0001, 'ether'),
-        'gas': max_gas,
-        'gasPrice': Web3.to_wei(gas_bid, 'gwei')
+        'nonce': protocol.eth.get_transaction_count(dest_address_in_bytes) + time.time_ns() + 1,
+        'to': dest_address_in_bytes,
+        'value': Web3.to_wei(1, coin),
+        'gas': Web3.to_wei(max_gas, coin),
+        'gasPrice': Web3.to_wei(gas_bid, coin)
     }
-    print(f"Transaction min price: {tx['gas'] * tx['gasPrice'] + tx['value']}")
+    # transaction_fee_estimate = protocol.eth.estimate_gas(tx) # tx['gas'] * (tx['gasPrice'] + tx['value'])
+    transaction_fee = protocol.eth.generate_gas_price(tx)  # web3.gas_strategies.time_based.fast_gas_price_strategy
+    print(f"Transaction min price: {transaction_fee}")
 
-    sent_tx = protocol.eth.send_transaction(tx)
-    print_and_log(logging.INFO, f"Sent transaction hash: {protocol.to_hex(sent_tx)}")
-    return protocol.to_hex(sent_tx)
+    # sign and send transactions
+    # protocol.eth.default_account = account.address
+    # protocol.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
+    # signed_tx = protocol.eth.sign_transaction()
+    # sent_tx = protocol.eth.send_transaction(tx)
+
+    # print_and_log(logging.INFO, f"Sent transaction hash: {protocol.to_hex(sent_tx)}")
+    # return protocol.to_hex(sent_tx)
 
 
 def get_protocol():
@@ -84,12 +90,13 @@ def swap():
 
 
 if __name__ == "__main__":
+    coin_type = 'gether'
     send_transaction(
         "https://rpc-testnet.kcc.network",
         '36fc2383ca9b0860b3a35a8d0562faf92805c26cb3f7ed7bf27ff931fede8257',
         '0x0a45Ef5ec2f8DF92E4BC2d1C881A2e446Ef94F4B',
         '20',
-        'eth',
-        50,
-        10
+        coin_type,
+        1,
+        1
     )
