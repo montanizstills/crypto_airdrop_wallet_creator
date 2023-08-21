@@ -11,7 +11,7 @@ const {MuteSwitchPair} = require("muteswitch-sdk");
  * @returns {Promise<void>}
  */
 const swap = async (from, to, swapAmount, fromWalletAddress, provider, settings) => {
-    muteSwithcPair = new MuteSwitchPair({
+    muteSwitchPair = new MuteSwitchPair({
         fromTokenContractAddress: from,
         toTokenContractAddress: to,
         ethereumAddress: fromWalletAddress,
@@ -22,7 +22,7 @@ const swap = async (from, to, swapAmount, fromWalletAddress, provider, settings)
         })
     })
 
-    const muteSwitchPairFactory = await muteSwithcPair.createFactory()
+    const muteSwitchPairFactory = await muteSwitchPair.createFactory()
     trade = await muteSwitchPairFactory.trade(swapAmount)
 
     // trade.quoteChanged$.subscribe((value: ))
