@@ -29,7 +29,7 @@ const getBinanceAccountInfo = async () => {
 
 /*
 * This function will withdraw funds from Binance to a wallet/network specified
-* @param {string} coinName -- the name of the coin to send
+* @param {string} coinName -- the name of the coin to send.
 * @param {string} network -- the network to withdraw funds on. default is `return with default network of the coin`
 * @param {string} address -- the address to withdraw funds to.
 * @param {decimal} amount -- the amount of coin to send
@@ -62,7 +62,7 @@ const getCoinInfo = async (coin) => {
 * */
 
 function main() {
-  
+
 }
 
 main()
