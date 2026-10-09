@@ -1,0 +1,7 @@
+.idea*/
+node_modules*/
+venv*/
+node_implementation/package.json
+node_implementation/package-lock.json
+resources/.env/
+

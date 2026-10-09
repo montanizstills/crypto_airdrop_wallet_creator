@@ -1,0 +1,3 @@
+INFO:root:Wallet: '0x889589b4Ef4D5f53Ae951acA2bE4421e54c2aC5B', has a balance of 70000000000000000 wei.
+INFO:root:Attempting to sending 20000000000000 to 0x889589b4ef4d5f53ae951aca2be4421e54c2ac5b.
+INFO:root:Sent transaction hash: 0x0dc83d770b1b8fa6ed47420e6d701a834f62252041e336a3f88e1c03802d7157

@@ -1,0 +1,18 @@
+{
+  "alchemy_settings": {
+    "apiKey": "4GkSO6DN3LcsMt-xzrSqWZBPnRlTcaia",
+    "network": "myFunky"
+  },
+  "user_settings": {
+    "wallet_address": "0x50283A16E516F4CB2C88F6b7D8D0F146224924B4"
+  },
+  "binance_settings": {
+    "binance_api_key": "AGCblT0goT7Yt7U0AkBHv9u1UG8nUa41THTqT3e1lEoByYBq87WhVeHQH3msIVqX",
+    "binance_api_secret": "CZQUuHS3WdswXfhqWGPFO1f7HeYYrvZB79NQEpDhpJexdjdkhGvIIj90h7TUWq5b",
+    "ton_binance_testnet_api_key": "p0wnbOJVpjNzzExK1WwtZ1qAUedpSJblKPu3NK5LygpGlSCJIryedoSeKio6ba33",
+    "ton_binance_testnet_api_secret": "0IdYADjMaAIi5aMaa5wtB7kuM65VlHlddxBpzMfCxADG6T1FBtwl8YBD1Qprxil6",
+    "nez_binance_testnet_api_key":"dwc7CuwUNaWgmttPiuNApxppOaEfs7uJrguwQtI7SIqpyAz2tTmOU4c2zZW9Dinm",
+    "nez_binance_testnet_api_secret": "2sWS89UyY7DpHhtvFVrcsGmbrbH6S8SoaFn7pkzaWDJjQ6frIZT2v0nMt6X2kjKz"
+
+  }
+}
